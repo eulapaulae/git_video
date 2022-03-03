@@ -41,7 +41,6 @@ survey_short%>%
 survey_short%>%
   select(how_old_are_you, industry,annual_salary, gender)%>%
   filter(gender=="Woman")
-)
 ```
 
 

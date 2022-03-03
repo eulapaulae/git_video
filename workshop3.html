@@ -433,23 +433,21 @@ survey_short%&gt;%
 ## #   highest_level_of_education_completed &lt;chr&gt;, gender &lt;chr&gt;, race &lt;chr&gt;</code></pre>
 <pre class="r"><code>survey_short%&gt;%
   select(how_old_are_you, industry,annual_salary, gender)%&gt;%
-  filter(gender==&quot;Woman&quot;)%&gt;%
-  filter(industry==&quot;Education (Higher Education)&quot; | 
-          industry==&quot;Education (Higher Education)&quot;)</code></pre>
-<pre><code>## # A tibble: 1,629 × 4
-##    how_old_are_you industry                     annual_salary gender
-##    &lt;chr&gt;           &lt;chr&gt;                                &lt;dbl&gt; &lt;chr&gt; 
-##  1 25-34           Education (Higher Education)         55000 Woman 
-##  2 35-44           Education (Higher Education)         62000 Woman 
-##  3 35-44           Education (Higher Education)         54000 Woman 
-##  4 35-44           Education (Higher Education)         60000 Woman 
-##  5 35-44           Education (Higher Education)         68000 Woman 
-##  6 35-44           Education (Higher Education)         96000 Woman 
-##  7 25-34           Education (Higher Education)         52000 Woman 
-##  8 45-54           Education (Higher Education)         71000 Woman 
-##  9 35-44           Education (Higher Education)         80000 Woman 
-## 10 35-44           Education (Higher Education)         65000 Woman 
-## # … with 1,619 more rows</code></pre>
+  filter(gender==&quot;Woman&quot;)</code></pre>
+<pre><code>## # A tibble: 16,419 × 4
+##    how_old_are_you industry                      annual_salary gender
+##    &lt;chr&gt;           &lt;chr&gt;                                 &lt;dbl&gt; &lt;chr&gt; 
+##  1 25-34           Education (Higher Education)          55000 Woman 
+##  2 25-34           Accounting, Banking &amp; Finance         34000 Woman 
+##  3 25-34           Nonprofits                            62000 Woman 
+##  4 25-34           Accounting, Banking &amp; Finance         60000 Woman 
+##  5 25-34           Publishing                            33000 Woman 
+##  6 45-54           Computing or Tech                    112000 Woman 
+##  7 35-44           Accounting, Banking &amp; Finance         45000 Woman 
+##  8 25-34           Nonprofits                            47500 Woman 
+##  9 35-44           Education (Higher Education)          62000 Woman 
+## 10 25-34           Law                                   52000 Woman 
+## # … with 16,409 more rows</code></pre>
 </div>
 
 
