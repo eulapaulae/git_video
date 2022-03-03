@@ -13,7 +13,7 @@
 
 <meta name="date" content="2022-03-01" />
 
-<title>Workshop 3</title>
+<title>Workshop 3 - RMarkdown and Workshop4 - Data Wrangling</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -359,7 +359,8 @@ pre code {
 
 
 
-<h1 class="title toc-ignore">Workshop 3</h1>
+<h1 class="title toc-ignore">Workshop 3 - RMarkdown and Workshop4 - Data
+Wrangling</h1>
 <h4 class="author">Eula Esmeralda</h4>
 <h4 class="date">2022-03-01</h4>
 
@@ -368,9 +369,7 @@ pre code {
 
 <div id="data-wrangling" class="section level3">
 <h3>Data wrangling</h3>
-<pre class="r"><code>#data loading
-
-data&lt;-read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-18/survey.csv&#39;)</code></pre>
+<pre class="r"><code>survey&lt;-read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-18/survey.csv&quot;)</code></pre>
 <pre><code>## Rows: 26232 Columns: 18
 ## ── Column specification ────────────────────────────────────────────────────────
 ## Delimiter: &quot;,&quot;
@@ -379,21 +378,78 @@ data&lt;-read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytue
 ## 
 ## ℹ Use `spec()` to retrieve the full column specification for this data.
 ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>data%&gt;%head()</code></pre>
-<pre><code>## # A tibble: 6 × 18
-##   timestamp    how_old_are_you industry job_title additional_cont… annual_salary
-##   &lt;chr&gt;        &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;                    &lt;dbl&gt;
-## 1 4/27/2021 1… 25-34           Educati… Research… &lt;NA&gt;                     55000
-## 2 4/27/2021 1… 25-34           Computi… Change &amp;… &lt;NA&gt;                     54600
-## 3 4/27/2021 1… 25-34           Account… Marketin… &lt;NA&gt;                     34000
-## 4 4/27/2021 1… 25-34           Nonprof… Program … &lt;NA&gt;                     62000
-## 5 4/27/2021 1… 25-34           Account… Accounti… &lt;NA&gt;                     60000
-## 6 4/27/2021 1… 25-34           Educati… Scholarl… &lt;NA&gt;                     62000
-## # … with 12 more variables: other_monetary_comp &lt;dbl&gt;, currency &lt;chr&gt;,
-## #   currency_other &lt;chr&gt;, additional_context_on_income &lt;chr&gt;, country &lt;chr&gt;,
-## #   state &lt;chr&gt;, city &lt;chr&gt;, overall_years_of_professional_experience &lt;chr&gt;,
+<pre class="r"><code>country&lt;-survey%&gt;%
+  distinct(country)
+
+survey%&gt;%count(country, sort=TRUE)</code></pre>
+<pre><code>## # A tibble: 294 × 2
+##    country                      n
+##    &lt;chr&gt;                    &lt;int&gt;
+##  1 United States             9010
+##  2 USA                       7918
+##  3 US                        2485
+##  4 Canada                    1543
+##  5 United Kingdom             584
+##  6 UK                         579
+##  7 U.S.                       569
+##  8 United States of America   425
+##  9 Usa                        420
+## 10 Australia                  368
+## # … with 284 more rows</code></pre>
+<pre class="r"><code>survey_short&lt;-survey%&gt;%
+  filter(
+    country==&quot;United States&quot; | 
+      country==&quot;USA&quot; |
+      country==&quot;US&quot; |
+      country==&quot;U.S.&quot; |
+      country==&quot;United States of America&quot; |
+      country==&quot;Usa&quot; 
+    )
+
+
+survey_short%&gt;%
+  filter(
+    annual_salary&gt;55000 &amp; 
+      gender==&quot;Woman&quot;
+  )</code></pre>
+<pre><code>## # A tibble: 12,285 × 18
+##    timestamp   how_old_are_you industry job_title additional_cont… annual_salary
+##    &lt;chr&gt;       &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;     &lt;chr&gt;                    &lt;dbl&gt;
+##  1 4/27/2021 … 25-34           Nonprof… Program … &lt;NA&gt;                     62000
+##  2 4/27/2021 … 25-34           Account… Accounti… &lt;NA&gt;                     60000
+##  3 4/27/2021 … 45-54           Computi… Systems … Data developer/…        112000
+##  4 4/27/2021 … 35-44           Educati… Deputy T… &lt;NA&gt;                     62000
+##  5 4/27/2021 … 35-44           Busines… Executiv… &lt;NA&gt;                     85000
+##  6 4/27/2021 … 35-44           Busines… Senior M… &lt;NA&gt;                     98000
+##  7 4/27/2021 … 25-34           Health … Data Pro… &lt;NA&gt;                     74000
+##  8 4/27/2021 … 35-44           Governm… Research… &lt;NA&gt;                     96000
+##  9 4/27/2021 … 35-44           Educati… Communic… &lt;NA&gt;                     60000
+## 10 4/27/2021 … 35-44           Governm… Economist &lt;NA&gt;                    140000
+## # … with 12,275 more rows, and 12 more variables: other_monetary_comp &lt;dbl&gt;,
+## #   currency &lt;chr&gt;, currency_other &lt;chr&gt;, additional_context_on_income &lt;chr&gt;,
+## #   country &lt;chr&gt;, state &lt;chr&gt;, city &lt;chr&gt;,
+## #   overall_years_of_professional_experience &lt;chr&gt;,
 ## #   years_of_experience_in_field &lt;chr&gt;,
 ## #   highest_level_of_education_completed &lt;chr&gt;, gender &lt;chr&gt;, race &lt;chr&gt;</code></pre>
+<pre class="r"><code>survey_short%&gt;%
+  select(how_old_are_you, industry,annual_salary, gender)%&gt;%
+  filter(gender==&quot;Woman&quot;)%&gt;%
+  filter(industry==&quot;Education (Higher Education)&quot; | 
+          industry==&quot;Education (Higher Education)&quot;)</code></pre>
+<pre><code>## # A tibble: 1,629 × 4
+##    how_old_are_you industry                     annual_salary gender
+##    &lt;chr&gt;           &lt;chr&gt;                                &lt;dbl&gt; &lt;chr&gt; 
+##  1 25-34           Education (Higher Education)         55000 Woman 
+##  2 35-44           Education (Higher Education)         62000 Woman 
+##  3 35-44           Education (Higher Education)         54000 Woman 
+##  4 35-44           Education (Higher Education)         60000 Woman 
+##  5 35-44           Education (Higher Education)         68000 Woman 
+##  6 35-44           Education (Higher Education)         96000 Woman 
+##  7 25-34           Education (Higher Education)         52000 Woman 
+##  8 45-54           Education (Higher Education)         71000 Woman 
+##  9 35-44           Education (Higher Education)         80000 Woman 
+## 10 35-44           Education (Higher Education)         65000 Woman 
+## # … with 1,619 more rows</code></pre>
 </div>
 
 

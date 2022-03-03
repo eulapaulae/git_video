@@ -1,5 +1,5 @@
 ---
-title: "Workshop 3"
+title: "Workshop 3 - RMarkdown and Workshop4 - Data Wrangling"
 author: "Eula Esmeralda"
 date: '2022-03-01'
 output: html_document
@@ -9,16 +9,39 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
-```
+``` 
 
 ### Data wrangling
 
 ```{r}
-#data loading
+survey<-read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-18/survey.csv")
 
-data<-read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-18/survey.csv')
+country<-survey%>%
+  distinct(country)
 
-data%>%head()
+survey%>%count(country, sort=TRUE)
 
+survey_short<-survey%>%
+  filter(
+    country=="United States" | 
+      country=="USA" |
+      country=="US" |
+      country=="U.S." |
+      country=="United States of America" |
+      country=="Usa" 
+    )
+
+
+survey_short%>%
+  filter(
+    annual_salary>55000 & 
+      gender=="Woman"
+  )
+
+survey_short%>%
+  select(how_old_are_you, industry,annual_salary, gender)%>%
+  filter(gender=="Woman")
+)
 ```
+
 
